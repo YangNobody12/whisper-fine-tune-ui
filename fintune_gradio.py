@@ -43,7 +43,7 @@ training_process = None
 def create_project(project_name: str):
     path = os.path.join("dataset", project_name)
     os.makedirs(os.path.join(path, "wavs"), exist_ok=True)
-    return f"✅ Created project: {project_name}"
+    return f"Created project: {project_name}"
 
 
 def get_projects():
@@ -59,11 +59,11 @@ def get_projects():
 
 def check_project_files(project_name: str):
     if not project_name:
-        return "❌ No project selected"
+        return "No project selected"
     path = os.path.join("dataset", project_name)
     path_wavs = os.path.join(path, "wavs")
     if not os.path.exists(path):
-        return f"❌ Project '{project_name}' does not exist"
+        return f"Project '{project_name}' does not exist"
 
     audio_files = []
     if os.path.exists(path_wavs):
@@ -75,15 +75,15 @@ def check_project_files(project_name: str):
     ]
 
     report = []
-    report.append(f"📂 Checking project: {project_name}")
-    report.append(f"🎵 Audio files found: {len(audio_files)}")
+    report.append(f"Checking project: {project_name}")
+    report.append(f"Audio files found: {len(audio_files)}")
     if audio_files:
         report.extend([f"   - {f}" for f in audio_files[:5]])
 
     if metadata_files:
-        report.append(f"📝 Metadata file(s) found: {', '.join(metadata_files)}")
+        report.append(f"Metadata file(s) found: {', '.join(metadata_files)}")
     else:
-        report.append("⚠️ No metadata file found")
+        report.append("No metadata file found")
 
     return "\n".join(report)
 
@@ -91,11 +91,11 @@ def check_project_files(project_name: str):
 def get_random_audio(project_name: str):
     path = os.path.join("dataset", project_name, "wavs")
     if not os.path.exists(path):
-        return None, f"❌ No 'wavs' folder in {project_name}"
+        return None, f"No 'wavs' folder in {project_name}"
 
     files = [f for f in os.listdir(path) if f.endswith((".wav", ".mp3"))]
     if not files:
-        return None, "⚠️ No audio files found"
+        return None, "No audio files found"
 
     random_file = random.choice(files)
     return os.path.join(path, random_file), f"🎵 Selected: {random_file}"
@@ -109,7 +109,7 @@ def prepare_dataset_ui(metadata_path):
     dataset_cache, processor_cache, tokenizer_cache, feature_extractor_cache = (
         load_and_prepare_dataset(metadata_path)
     )
-    return "✅ Dataset prepared!"
+    return "Dataset prepared!"
 
 
 def prepare_from_project(projech_name):
@@ -122,7 +122,7 @@ def prepare_from_project(projech_name):
         transcription = row[1]
         file_path = os.path.join("dataset", projech_name, "wavs", audio_id + ".wav")
         if not os.path.exists(file_path):
-            print(f"⚠️ File not found: {file_path}")
+            print(f"File not found: {file_path}")
             continue
         try:
             audio_array, sr = librosa.load(file_path, sr=16000)
@@ -138,7 +138,7 @@ def prepare_from_project(projech_name):
             }
             audio_dataset.append(data)
         except Exception as e:
-            print(f"❌ Error loading {audio_id}: {e}")
+            print(f"Error loading {audio_id}: {e}")
 
     json_path = f"dataset/{projech_name}/metadata.json"
     with open(json_path, "w", encoding="utf-8") as f:
@@ -190,7 +190,7 @@ def train_ui(
 ):
     global training_process
     if not project_name:
-        yield "❌ Please select a project", pd.DataFrame()
+        yield "Please select a project", pd.DataFrame()
         return
 
     script_path = os.path.abspath("train_cli.py")
@@ -239,7 +239,7 @@ def train_ui(
         if not line.strip():
             continue
 
-        # ✅ แสดง log ที่ CMD
+        # แสดง log ที่ CMD
         print(line.strip(), flush=True)
 
         parsed_metrics = None
@@ -270,9 +270,9 @@ def train_ui(
     rc = training_process.returncode
     training_process = None
     if rc == 0:
-        yield "✅ Training finished!", pd.DataFrame(metrics_list)
+        yield "Training finished!", pd.DataFrame(metrics_list)
     else:
-        yield f"❌ Training failed with exit code {rc}", pd.DataFrame(metrics_list)
+        yield f"Training failed with exit code {rc}", pd.DataFrame(metrics_list)
 
 
 def stop_training():
@@ -284,9 +284,9 @@ def stop_training():
         except subprocess.TimeoutExpired:
             training_process.kill()
         training_process = None
-        return "🛑 Training stopped by user!"
+        return "Training stopped by user!"
     else:
-        return "⚠️ No training process is running."
+        return "No training process is running."
 
 
 # -------------------------------
@@ -311,7 +311,7 @@ def load_settings(project_name):
                 settings = json.load(f)
             return {**default_settings, **settings}
         except Exception as e:
-            print(f"⚠️ Error reading settings.json: {e}")
+            print(f"Error reading settings.json: {e}")
     return default_settings
 
 
@@ -341,7 +341,7 @@ def save_settings(
     }
     with open(settings_path, "w", encoding="utf-8") as f:
         json.dump(settings, f, ensure_ascii=False, indent=2)
-    return f"✅ Saved settings to {settings_path}"
+    return f"Saved settings to {settings_path}"
 
 
 def setup_training_settings(project_name):
@@ -376,7 +376,7 @@ def setup_training_settings(project_name):
 # -------------------------------
 def create_ui():
     with gr.Blocks() as demo:
-        gr.Markdown("# 🎙️ Whisper Fine-tune UI")
+        gr.Markdown("# Whisper Fine-tune UI")
 
         with gr.Tab("Prepare Dataset"):
             gr.Markdown("### Project Management")
@@ -394,7 +394,7 @@ def create_ui():
             project_dropdown = gr.Dropdown(
                 get_projects(), label="Project Name", interactive=True
             )
-            refresh_btn = gr.Button("🔄 Refresh")
+            refresh_btn = gr.Button("Refresh")
             refresh_btn.click(
                 lambda: gr.update(choices=get_projects()), outputs=project_dropdown
             )
@@ -452,7 +452,7 @@ def create_ui():
                 eval_steps = gr.Number(label="Eval Steps", value=1000)
                 lr = gr.Number(label="Learning Rate", value=1e-5)
 
-            setup_btn = gr.Button("🔧 Auto Setup")
+            setup_btn = gr.Button("Auto Setup")
             setup_btn.click(
                 setup_training_settings,
                 inputs=project_dropdown2,

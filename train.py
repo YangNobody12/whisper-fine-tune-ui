@@ -114,10 +114,10 @@ def train_model(
         data_collator=data_collator,
         compute_metrics=compute_metrics,
         tokenizer=processor.feature_extractor,
-        callbacks=[MetricsLoggerCallback()],  # ✅ เพิ่ม callback
+        callbacks=[MetricsLoggerCallback()], 
     )
 
     trainer.train()
     trainer.save_model(output_dir)
 
-    return "✅ Training completed!"
+    return "Training completed!"

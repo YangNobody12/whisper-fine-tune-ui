@@ -25,16 +25,16 @@ def cli_train(
     csv_path = os.path.join(proj_path, "metadata.csv")
 
     if not os.path.exists(json_path) and os.path.exists(csv_path):
-        print("⚙️ Converting metadata.csv → metadata.json ...")
-        return f"❌ No metadata.json or metadata.csv found in {project}"
+        print("Converting metadata.csv → metadata.json ...")
+        return f"No metadata.json or metadata.csv found in {project}"
 
     if not os.path.exists(json_path):
-        return f"❌ No metadata.json or metadata.csv found in {project}"
+        return f"No metadata.json or metadata.csv found in {project}"
 
-    print("⚙️ Preparing dataset...")
+    print("Preparing dataset...")
     dataset, processor, tokenizer, feature_extractor = load_and_prepare_dataset(json_path)
 
-    print("⚙️ Start training...")
+    print("Start training...")
     result = train_model(
         dataset,
         processor,
