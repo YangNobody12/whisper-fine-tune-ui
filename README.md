@@ -7,7 +7,7 @@
 ## โครงสร้างโปรเจกต์
 ```
 ui_train_whisper/
-├── app.py               # Gradio UI สำหรับ train + dataset prepare
+├── finetune_gradio.py               # Gradio UI สำหรับ train + dataset prepare
 ├── train.py             # ฟังก์ชัน train_model + custom callback
 ├── train_cli.py         # CLI สำหรับ train จาก command line
 ├── dataset.py           # ฟังก์ชัน load และ prepare dataset
@@ -54,7 +54,7 @@ gradio
 ### 1) เตรียม Dataset
 สร้างโปรเจกต์ใหม่:
 ```bash
-python app.py
+python finetune_gradio.py
 ```
 ไปที่แท็บ **Prepare Dataset**
 - ใส่ชื่อโปรเจกต์ เช่น `my_project`
@@ -83,7 +83,7 @@ python train_cli.py \
 
 ### 3) Train ผ่าน UI
 ```bash
-python app.py
+python finetune_gradio.py
 ```
 - เปิดเบราว์เซอร์: `http://127.0.0.1:7860`
 - เลือกโปรเจกต์
