@@ -1,0 +1,4 @@
+models--openai--whisper-small/
+.gradio
+__pycache__/
+forhpc/
