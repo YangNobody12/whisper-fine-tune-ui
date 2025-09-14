@@ -30,6 +30,9 @@ conda activate whisper_env
 
 # ติดตั้ง dependencies
 pip install -r requirements.txt
+
+pip install torch==2.3.0+cu118 torchaudio==2.3.0+cu118 --extra-index-url https://download.pytorch.org/whl/cu118
+
 ```
 
 **requirements.txt (ตัวอย่าง):**

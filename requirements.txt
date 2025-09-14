@@ -1,0 +1,9 @@
+transformers
+datasets
+evaluate
+librosa
+numpy
+pandas
+gradio
+soundfile
+accelerate
