@@ -429,9 +429,16 @@ def create_ui():
         with gr.Tab("Train Model"):
             gr.Markdown("### Train Whisper Model")
             with gr.Row():
-                project_dropdown2 = gr.Dropdown(
-                    os.listdir("dataset"), label="Select Project", interactive=True
-                )
+                with gr.Column():
+                    project_dropdown2 = gr.Dropdown(
+                        choices=get_projects(),  # ✅ ต้องใช้ choices
+                        label="Select Project",
+                        interactive=True,
+                    )
+                    refresh_btn2 = gr.Button("🔄 Refresh")
+                    refresh_btn2.click(
+                        lambda: gr.update(choices=get_projects()), outputs=project_dropdown2
+                    )
                 output_dir = gr.Textbox(label="Output Directory")
                 model_name = gr.Textbox(
                     label="Model Checkpoint", value="openai/whisper-small"
